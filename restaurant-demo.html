@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bella Forchetta | Fine Dining in Berlin</title>
+    <meta
+      name="description"
+      content="Premium Restaurant-Website mit interaktivem Menü, emotionaler Food-Inszenierung und klarer Reservierungsführung."
+    />
+    <meta name="theme-color" content="#120f0c" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #120f0c;
+        --surface: #1d1814;
+        --surface-2: #261d17;
+        --text: #fff9f1;
+        --muted: #d9bfa8;
+        --gold: #d6a46a;
+        --line: rgba(255, 255, 255, 0.12);
+        --radius: 20px;
+        --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--text);
+        font-family: "Manrope", sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+        background:
+          radial-gradient(1000px 450px at 10% -10%, rgba(214, 164, 106, 0.16), transparent 58%),
+          radial-gradient(900px 400px at 100% 0%, rgba(109, 35, 48, 0.16), transparent 60%),
+          var(--bg);
+      }
+
+      body.modal-open {
+        overflow: hidden;
+      }
+
+      .container {
+        width: min(1160px, 92vw);
+        margin: 0 auto;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 1.2rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: linear-gradient(180deg, rgba(19, 16, 13, 0.92), rgba(19, 16, 13, 0.68));
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .brand {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+      }
+
+      .nav-toggle {
+        display: none;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        cursor: pointer;
+        margin-left: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.1rem;
+        margin-left: auto;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        color: var(--text);
+      }
+
+      .nav-cta {
+        color: #21170f;
+        text-decoration: none;
+        font-weight: 700;
+        background: linear-gradient(130deg, var(--gold), #efc393);
+        border-radius: 999px;
+        padding: 0.52rem 0.95rem;
+      }
+
+      .hero,
+      .section,
+      .site-footer {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 0.96fr;
+        gap: 2rem;
+        align-items: center;
+        padding: 2.8rem 0 3.4rem;
+        overflow: clip;
+        scroll-margin-top: 110px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        font-family: "Playfair Display", serif;
+        line-height: 1.1;
+      }
+
+      h1 {
+        font-size: clamp(2.05rem, 5.2vw, 4.25rem);
+        max-width: 11ch;
+      }
+
+      h2 {
+        font-size: clamp(1.55rem, 3.7vw, 2.45rem);
+      }
+
+      p {
+        color: var(--muted);
+        margin: 0.25rem 0 0;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--gold);
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin: 0 0 0.65rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1.2rem;
+      }
+
+      .btn {
+        text-decoration: none;
+        padding: 0.82rem 1.15rem;
+        border-radius: 999px;
+        font-weight: 700;
+        border: 0;
+        cursor: pointer;
+      }
+
+      .btn-main {
+        color: #1a120b;
+        background: linear-gradient(130deg, var(--gold), #e7bc8f);
+        box-shadow: 0 10px 30px rgba(244, 178, 102, 0.32);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .btn-main:hover,
+      .btn-main:focus-visible {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(244, 178, 102, 0.38);
+      }
+
+      .btn-soft {
+        color: var(--text);
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+
+      .btn-soft:hover,
+      .btn-soft:focus-visible {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.28);
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.65rem;
+        margin-top: 1.1rem;
+      }
+
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 0.62rem;
+      }
+
+      .stat strong {
+        display: block;
+        color: var(--text);
+      }
+
+      .food-hero {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        min-height: 460px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .food-hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .food-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(19, 16, 13, 0.1), rgba(19, 16, 13, 0.58));
+        pointer-events: none;
+      }
+
+      .section {
+        padding: 3rem 0 3.4rem;
+        scroll-margin-top: 110px;
+      }
+
+      .section-head {
+        margin-bottom: 1.6rem;
+      }
+
+      .menu-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin: 1rem 0 1.2rem;
+      }
+
+      .filter-btn {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+        padding: 0.4rem 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover,
+      .filter-btn:focus-visible {
+        border-color: rgba(214, 164, 106, 0.58);
+        color: #ffe8d0;
+      }
+
+      .menu-categories {
+        display: grid;
+        gap: 1.7rem;
+      }
+
+      .menu-category {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.01);
+      }
+
+      .menu-category h3 {
+        margin-bottom: 0.95rem;
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+
+      .dish {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: linear-gradient(145deg, var(--surface-2), var(--surface));
+        padding: 0;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.3s ease, border-color 0.3s ease;
+        text-align: left;
+        color: inherit;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      .dish:hover,
+      .dish:focus-visible {
+        transform: translateY(-6px);
+        border-color: rgba(214, 164, 106, 0.46);
+      }
+
+      .dish img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .dish-body {
+        padding: 1rem;
+      }
+
+      .dish-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.4rem;
+      }
+
+      .price {
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      .dish-meta {
+        margin-top: 0.5rem;
+      }
+
+      .dish-meta span {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.18rem 0.48rem;
+        font-size: 0.84rem;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 1.1rem;
+      }
+
+      .gallery-item {
+        border: 0;
+        padding: 0;
+        background: none;
+        cursor: zoom-in;
+      }
+
+      .gallery-main,
+      .gallery-col img {
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+
+      .gallery-main {
+        width: 100%;
+        height: 410px;
+        object-fit: cover;
+      }
+
+      .gallery-col {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .gallery-col img {
+        width: 100%;
+        height: 198px;
+        object-fit: cover;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+      }
+
+      .info-card,
+      .cta-box {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1rem;
+      }
+
+      .hours,
+      .contact-points {
+        list-style: none;
+        margin: 0.8rem 0 0;
+        padding: 0;
+      }
+
+      .hours li,
+      .contact-points li {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.7rem;
+      }
+
+      .hours li + li,
+      .contact-points li + li {
+        margin-top: 0.35rem;
+      }
+
+      .contact-points a {
+        color: #ffe2c4;
+        text-decoration: none;
+      }
+
+      .reservation-form {
+        margin-top: 0.8rem;
+        display: grid;
+        gap: 0.62rem;
+      }
+
+      .reservation-form label {
+        font-weight: 600;
+        color: #ffe7d1;
+        font-size: 0.93rem;
+      }
+
+      .reservation-form input,
+      .reservation-form select,
+      .reservation-form textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 0.64rem 0.72rem;
+        font: inherit;
+      }
+
+      .reservation-status {
+        min-height: 1.4rem;
+        color: #ffd8a6;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .site-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.8rem 0 2rem;
+      }
+
+      .site-footer p {
+        margin: 0;
+      }
+
+      .site-footer a {
+        color: #ffe2c4;
+      }
+
+      .dish-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+
+      .dish-modal.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-overlay {
+        border: 0;
+        background: rgba(6, 5, 4, 0.6);
+        backdrop-filter: blur(6px);
+        cursor: pointer;
+      }
+
+      .modal-panel {
+        width: min(560px, 92vw);
+        height: 100%;
+        overflow-y: auto;
+        background: linear-gradient(150deg, rgba(24, 19, 15, 0.98), rgba(33, 24, 19, 0.98));
+        border-left: 1px solid var(--line);
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+        padding: 1rem;
+        transform: translateX(100%);
+        transition: transform 0.4s ease;
+      }
+
+      .dish-modal.open .modal-panel {
+        transform: translateX(0);
+      }
+
+      .modal-head {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .modal-close {
+        width: 2.2rem;
+        height: 2.2rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.02);
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .modal-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        margin-top: 0.8rem;
+      }
+
+      .modal-price {
+        color: #ffd8ac;
+        font-weight: 700;
+        margin-top: 0.5rem;
+      }
+
+      .meta-grid {
+        display: grid;
+        gap: 0.7rem;
+        margin-top: 0.9rem;
+      }
+
+      .meta-box {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .meta-box ul {
+        margin: 0;
+        padding-left: 1rem;
+      }
+
+      .modal-cta {
+        margin-top: 0.95rem;
+        display: inline-flex;
+      }
+
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 95;
+        background: rgba(5, 5, 5, 0.86);
+        backdrop-filter: blur(6px);
+        display: grid;
+        place-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .lightbox.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .lightbox-inner {
+        width: min(96vw, 1100px);
+        position: relative;
+      }
+
+      .lightbox img {
+        width: 100%;
+        max-height: 88vh;
+        object-fit: contain;
+        border-radius: 12px;
+      }
+
+      .lightbox-close {
+        position: absolute;
+        right: 0.3rem;
+        top: -2.4rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        border-radius: 999px;
+        width: 2.1rem;
+        height: 2.1rem;
+        cursor: pointer;
+      }
+
+      @media (max-width: 900px) {
+        .topbar {
+          flex-wrap: wrap;
+        }
+
+        .nav-toggle {
+          display: inline-grid;
+          place-items: center;
+          margin-left: auto;
+        }
+
+        .nav-links {
+          width: 100%;
+          display: none;
+          padding: 0.4rem 0 0.2rem;
+          flex-wrap: wrap;
+          margin-left: 0;
+        }
+
+        .nav-links.open {
+          display: flex;
+        }
+
+        .hero,
+        .two-col,
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .food-hero {
+          min-height: 340px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .menu-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .modal-panel {
+          width: 100%;
+        }
+
+        .nav-cta {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="topbar">
+        <div class="brand">BELLA FORCHETTA</div>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Navigation öffnen">☰</button>
+        <nav class="nav-links" id="main-nav" aria-label="Restaurant Navigation">
+          <a href="#start">Start</a>
+          <a href="#menu">Menü</a>
+          <a href="#ueber">Über uns</a>
+          <a href="#atmosphaere">Galerie</a>
+          <a href="#reservierung">Reservierung</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+        <a class="nav-cta" href="#reservierung">Reservieren</a>
+      </header>
+
+      <section class="hero" id="start">
+        <div class="reveal">
+          <p class="eyebrow">Mediterrane Küche in Berlin</p>
+          <h1>Kulinarische Perfektion in jedem Bissen.</h1>
+          <p>
+            Fine-Dining Atmosphäre, präzise Aromen und ein Service, der aus einem Abend ein Erlebnis macht. Entdecke
+            unser interaktives Menü und reserviere deinen Tisch in wenigen Sekunden.
+          </p>
+          <div class="actions">
+            <a class="btn btn-main" href="#reservierung">Tisch reservieren</a>
+            <a class="btn btn-soft" href="#menu">Menü entdecken</a>
+          </div>
+
+          <div class="hero-stats" aria-label="Restaurant Fakten">
+            <div class="stat"><strong>4.8 / 5</strong><small>Gästebewertung</small></div>
+            <div class="stat"><strong>Frisch gekocht</strong><small>Täglich ab 17 Uhr</small></div>
+            <div class="stat"><strong>Innen + Terrasse</strong><small>Warme Atmosphäre</small></div>
+          </div>
+        </div>
+
+        <article class="food-hero reveal" aria-label="Hauptgericht in Restaurant-Atmosphäre">
+          <img
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80"
+            alt="Stilvoll gedeckter Tisch in einem Restaurant"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+          />
+        </article>
+      </section>
+
+      <section class="section" id="menu">
+        <div class="section-head reveal">
+          <p class="eyebrow">Interaktives Menü</p>
+          <h2>Wähle ein Gericht und entdecke alle Details</h2>
+          <p>Klicke auf ein Gericht für Zutaten, Allergene, Zubereitungsstil und Empfehlung.</p>
+        </div>
+
+        <div class="menu-filter reveal" id="menuFilter" aria-label="Menü Kategorien"></div>
+        <div class="menu-categories" id="menuCategories" aria-live="polite"></div>
+      </section>
+
+      <section class="section" id="ueber">
+        <div class="two-col">
+          <article class="info-card reveal">
+            <p class="eyebrow">Über uns</p>
+            <h3>Ein Abend zwischen Handwerk und Atmosphäre</h3>
+            <p>
+              Bella Forchetta verbindet mediterrane Küche mit modernem Fine-Dining-Anspruch. Unsere Gerichte werden
+              täglich frisch vorbereitet, saisonal abgestimmt und mit viel Detail serviert.
+            </p>
+          </article>
+          <article class="info-card reveal">
+            <p class="eyebrow">Chefkoch & Philosophie</p>
+            <h3>Weniger Lautstärke, mehr Geschmack</h3>
+            <p>
+              Chefkoch Marco Vitale kombiniert klassische Techniken mit modernen Aromen. Jede Komponente auf dem Teller
+              hat einen Zweck.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="atmosphaere">
+        <div class="section-head reveal">
+          <p class="eyebrow">Galerie</p>
+          <h2>So fühlt sich ein Abend bei uns an</h2>
+        </div>
+        <div class="gallery reveal" aria-label="Bildergalerie Restaurant">
+          <button class="gallery-item" type="button" data-lightbox-src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1800&q=80" aria-label="Galeriebild vergrößern">
+            <img class="gallery-main" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80" alt="Restaurant-Innenraum mit warmem Licht" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+          </button>
+          <div class="gallery-col">
+            <button class="gallery-item" type="button" data-lightbox-src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80" aria-label="Galeriebild vergrößern">
+              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="Detailaufnahme einer gedeckten Restauranttafel" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            </button>
+            <button class="gallery-item" type="button" data-lightbox-src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1600&q=80" aria-label="Galeriebild vergrößern">
+              <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=80" alt="Freunde genießen Abendessen im Restaurant" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reservierung">
+        <div class="two-col">
+          <article class="info-card reveal" id="kontakt">
+            <p class="eyebrow">Öffnungszeiten</p>
+            <h3>Bella Forchetta Berlin</h3>
+            <ul class="hours">
+              <li><span>Montag</span><span>Geschlossen</span></li>
+              <li><span>Dienstag - Donnerstag</span><span>17:00 - 22:30</span></li>
+              <li><span>Freitag - Samstag</span><span>17:00 - 23:30</span></li>
+              <li><span>Sonntag</span><span>16:00 - 21:30</span></li>
+            </ul>
+            <ul class="contact-points">
+              <li><a href="tel:+493012345678">Telefon: 030 12345678</a></li>
+              <li><a href="mailto:reservierung@bella-forchetta.de">reservierung@bella-forchetta.de</a></li>
+              <li>Rosenthaler Straße 11, 10119 Berlin</li>
+            </ul>
+          </article>
+
+          <article class="cta-box reveal">
+            <p class="eyebrow">Reservierung</p>
+            <h3>Jetzt Tisch anfragen</h3>
+            <p>Teile uns Datum, Uhrzeit und Personenzahl mit. Wir bestätigen deine Anfrage zeitnah.</p>
+
+            <form class="reservation-form" id="reservationForm" novalidate>
+              <label for="guestName">Name</label>
+              <input id="guestName" name="guestName" type="text" autocomplete="name" required />
+
+              <label for="guestDate">Datum</label>
+              <input id="guestDate" name="guestDate" type="date" required />
+
+              <label for="guestTime">Uhrzeit</label>
+              <input id="guestTime" name="guestTime" type="time" required />
+
+              <label for="guestCount">Personenanzahl</label>
+              <select id="guestCount" name="guestCount" required>
+                <option value="">Bitte wählen</option>
+                <option>1 Person</option>
+                <option>2 Personen</option>
+                <option>3 Personen</option>
+                <option>4 Personen</option>
+                <option>5 Personen</option>
+                <option>6+ Personen</option>
+              </select>
+
+              <label for="guestContact">Kontakt (E-Mail oder Telefon)</label>
+              <input id="guestContact" name="guestContact" type="text" required />
+
+              <button class="btn btn-main" type="submit">Reservierungsanfrage senden</button>
+              <p class="reservation-status" id="reservationStatus" aria-live="polite"></p>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <p>
+          Bella Forchetta Berlin | Rosenthaler Straße 11, 10119 Berlin | 030 12345678 |
+          <a href="restaurant-impressum.html">Beispiel‑Impressum</a>
+        </p>
+      </footer>
+    </div>
+
+    <div class="dish-modal" id="dishModal" aria-hidden="true">
+      <button class="modal-overlay" type="button" aria-label="Menü-Details schließen"></button>
+      <aside class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="dishTitle">
+        <div class="modal-head">
+          <h3 id="dishTitle">Gericht</h3>
+          <button class="modal-close" id="modalClose" type="button" aria-label="Schließen">×</button>
+        </div>
+        <img class="modal-image" id="dishImage" src="" alt="" />
+        <p id="dishDescription"></p>
+        <p class="modal-price" id="dishPrice"></p>
+
+        <div class="meta-grid">
+          <article class="meta-box"><h4>Zutaten</h4><ul id="dishIngredients"></ul></article>
+          <article class="meta-box"><h4>Allergene</h4><p id="dishAllergens"></p></article>
+          <article class="meta-box"><h4>Zubereitungsstil</h4><p id="dishStyle"></p></article>
+          <article class="meta-box"><h4>Empfehlung</h4><p id="dishRecommendation"></p></article>
+        </div>
+
+        <a class="btn btn-main modal-cta" href="#reservierung" id="modalReserve">Jetzt reservieren</a>
+      </aside>
+    </div>
+
+    <div class="lightbox" id="galleryLightbox" aria-hidden="true">
+      <div class="lightbox-inner">
+        <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Bild schließen">×</button>
+        <img id="lightboxImage" src="" alt="Galeriebild" />
+      </div>
+    </div>
+
+    <script>
+      const dishes = [
+        {
+          id: 'v1',
+          name: 'Carpaccio di Manzo',
+          category: 'Vorspeisen',
+          price: '14 EUR',
+          image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1200&q=80',
+          description: 'Hauchdünn geschnittenes Rinderfilet mit Zitronenöl, Kapern und gereiftem Parmesan.',
+          ingredients: ['Rinderfilet', 'Parmesan', 'Kapern', 'Rucola', 'Zitronenöl'],
+          allergens: 'Milch',
+          style: 'Klassisch italienisch, kalt serviert',
+          recommendation: 'Passt ideal zu einem trockenen Rosé.'
+        },
+        {
+          id: 'v2',
+          name: 'Burrata al Pomodoro',
+          category: 'Vorspeisen',
+          price: '13 EUR',
+          image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&q=80',
+          description: 'Cremige Burrata auf geschmorten Tomaten mit Basilikum und geröstetem Sauerteig.',
+          ingredients: ['Burrata', 'Tomaten', 'Basilikum', 'Olivenöl', 'Sauerteigbrot'],
+          allergens: 'Milch, Gluten',
+          style: 'Mediterran, aromatisch-frisch',
+          recommendation: 'Empfohlen mit unserem Haus-Prosecco.'
+        },
+        {
+          id: 'v3',
+          name: 'Gegrillter Oktopus',
+          category: 'Vorspeisen',
+          price: '16 EUR',
+          image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80',
+          description: 'Zarter Oktopus vom Grill mit Zitronenöl, Kräutersalat und confierten Kirschtomaten.',
+          ingredients: ['Oktopus', 'Zitronenöl', 'Petersilie', 'Kirschtomaten', 'Meersalz'],
+          allergens: 'Weichtiere',
+          style: 'Kurz gegrillt, mediterran gewürzt',
+          recommendation: 'Sehr passend mit einem frischen Vermentino.'
+        },
+        {
+          id: 'h1',
+          name: 'Ofen-Lachs',
+          category: 'Hauptgerichte',
+          price: '28 EUR',
+          image: 'https://images.pexels.com/photos/3763847/pexels-photo-3763847.jpeg?auto=compress&cs=tinysrgb&w=1200',
+          description: 'Sanft gegarter Lachs mit Kräuterkruste, Zitronenbutter und saisonalem Ofengemüse.',
+          ingredients: ['Lachs', 'Kräuter', 'Zitrone', 'Butter', 'Saisongemüse'],
+          allergens: 'Fisch, Milch',
+          style: 'Schonend im Ofen gegart',
+          recommendation: 'Sehr harmonisch mit einem Chardonnay.'
+        },
+        {
+          id: 'h2',
+          name: 'Tagliatelle al Tartufo',
+          category: 'Hauptgerichte',
+          price: '24 EUR',
+          image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80',
+          description: 'Frische Tagliatelle in Trüffelrahm mit Parmesanspänen und schwarzem Pfeffer.',
+          ingredients: ['Tagliatelle', 'Trüffel', 'Parmesan', 'Sahne', 'Pfeffer'],
+          allergens: 'Gluten, Milch, Ei',
+          style: 'Frisch gekocht, cremig',
+          recommendation: 'Ideal mit einem leichten Pinot Noir.'
+        },
+        {
+          id: 'h3',
+          name: 'Rinderfilet 180g',
+          category: 'Hauptgerichte',
+          price: '36 EUR',
+          image: 'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=1200&q=80',
+          description: 'Rosa gebratenes Filet mit Rotweinjus, Kartoffelgratin und glasiertem Gemüse.',
+          ingredients: ['Rinderfilet', 'Rotweinjus', 'Kartoffel', 'Möhren', 'Thymian'],
+          allergens: 'Sellerie, Sulfite, Milch',
+          style: 'Sous-vide vorgegart, final scharf angebraten',
+          recommendation: 'Empfohlen mit einem kräftigen Cabernet Sauvignon.'
+        },
+        {
+          id: 'd1',
+          name: 'Tiramisu Hausart',
+          category: 'Desserts',
+          price: '10 EUR',
+          image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1200&q=80',
+          description: 'Luftige Mascarponecreme, Espresso-Biskuit und feiner Kakao im Glas serviert.',
+          ingredients: ['Mascarpone', 'Espresso', 'Löffelbiskuit', 'Kakao', 'Ei'],
+          allergens: 'Gluten, Milch, Ei',
+          style: 'Klassisch geschichtet, kalt serviert',
+          recommendation: 'Perfekt mit Espresso oder Dessertwein.'
+        },
+        {
+          id: 'd2',
+          name: 'Panna Cotta Vaniglia',
+          category: 'Desserts',
+          price: '9 EUR',
+          image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80',
+          description: 'Cremige Vanille-Panna-Cotta mit warmem Beerenragout und Minze.',
+          ingredients: ['Sahne', 'Vanille', 'Beeren', 'Zucker', 'Minze'],
+          allergens: 'Milch',
+          style: 'Sanft gekühlt',
+          recommendation: 'Unser Moscato rundet das Dessert elegant ab.'
+        },
+        {
+          id: 'd3',
+          name: 'Cannoli Siciliani',
+          category: 'Desserts',
+          price: '11 EUR',
+          image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80',
+          description: 'Knusprige Cannoli mit Ricottacreme, kandierter Orange und Pistazien.',
+          ingredients: ['Ricotta', 'Pistazien', 'Orangenzesten', 'Cannoli-Teig', 'Puderzucker'],
+          allergens: 'Gluten, Milch, Schalenfrüchte',
+          style: 'Frisch gefüllt, knusprig serviert',
+          recommendation: 'Empfohlen mit einem Espresso Doppio.'
+        },
+        {
+          id: 'g1',
+          name: 'Virgin Bellini',
+          category: 'Getränke',
+          price: '8 EUR',
+          image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1200&q=80',
+          description: 'Fruchtiger Aperitif aus weißem Pfirsich, Traubensaft und einem Spritzer Zitrone.',
+          ingredients: ['Pfirsichpüree', 'Traubensaft', 'Zitronensaft', 'Eiswürfel'],
+          allergens: 'Keine deklarationspflichtigen Allergene',
+          style: 'Frisch gemixt auf Eis',
+          recommendation: 'Perfekt als Aperitif vor den Vorspeisen.'
+        },
+        {
+          id: 'g2',
+          name: 'Hausgemachte Zitronenlimonade',
+          category: 'Getränke',
+          price: '7 EUR',
+          image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=1200&q=80',
+          description: 'Frisch gepresste Zitrone, Minze und feine Kohlensäure.',
+          ingredients: ['Zitronensaft', 'Minze', 'Zucker', 'Mineralwasser'],
+          allergens: 'Keine deklarationspflichtigen Allergene',
+          style: 'Frisch gemixt',
+          recommendation: 'Passt hervorragend zu Fisch und Pasta.'
+        },
+        {
+          id: 'g3',
+          name: 'Aranciata Rossa',
+          category: 'Getränke',
+          price: '6 EUR',
+          image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?auto=format&fit=crop&w=1200&q=80',
+          description: 'Blutorangen-Limonade mit leichter Bitternote und frischer Minze.',
+          ingredients: ['Blutorangensaft', 'Mineralwasser', 'Minze', 'Eiswürfel'],
+          allergens: 'Keine deklarationspflichtigen Allergene',
+          style: 'Spritzig, eiskalt serviert',
+          recommendation: 'Sehr beliebt zu leichten Pasta-Gerichten.'
+        },
+        {
+          id: 's1',
+          name: 'Chef Special: Hummer-Risotto',
+          category: 'Specials des Hauses',
+          price: '39 EUR',
+          image: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80',
+          description: 'Cremiges Safran-Risotto mit Hummer, Kräuteröl und Zitronenabrieb.',
+          ingredients: ['Arborio-Reis', 'Hummer', 'Safran', 'Parmesan', 'Weißwein'],
+          allergens: 'Krustentiere, Milch, Sulfite',
+          style: 'A la minute zubereitet',
+          recommendation: 'Unser Sommelier empfiehlt dazu einen Chablis.'
+        },
+        {
+          id: 's2',
+          name: 'Chef Special: Kalbsbäckchen',
+          category: 'Specials des Hauses',
+          price: '34 EUR',
+          image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1200&q=80',
+          description: 'Langsam geschmorte Kalbsbäckchen auf Selleriepüree mit geschmorter Schalotte.',
+          ingredients: ['Kalbsbäckchen', 'Sellerie', 'Schalotten', 'Rotwein', 'Thymian'],
+          allergens: 'Sellerie, Sulfite, Milch',
+          style: '12 Stunden geschmort',
+          recommendation: 'Dazu passt ein gereifter Merlot hervorragend.'
+        },
+        {
+          id: 's3',
+          name: 'Chef Special: Steinbutt & Safran',
+          category: 'Specials des Hauses',
+          price: '37 EUR',
+          image: 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1200&q=80',
+          description: 'Filet vom Steinbutt auf Safran-Fenchel mit Zitronenbutter und Kräuteröl.',
+          ingredients: ['Steinbutt', 'Safran', 'Fenchel', 'Zitrone', 'Kräuteröl'],
+          allergens: 'Fisch, Milch',
+          style: 'Schonend gegart, fein angerichtet',
+          recommendation: 'Empfohlen mit einem mineralischen Weißburgunder.'
+        }
+      ];
+
+      const categoryOrder = ['Vorspeisen', 'Hauptgerichte', 'Desserts', 'Getränke', 'Specials des Hauses'];
+      let activeCategory = 'Alle';
+
+      const menuFilter = document.getElementById('menuFilter');
+      const menuCategories = document.getElementById('menuCategories');
+
+      function buildFilters() {
+        const categories = ['Alle', ...categoryOrder];
+        menuFilter.innerHTML = categories
+          .map((category) => `<button class="filter-btn ${category === activeCategory ? 'active' : ''}" type="button" data-category="${category}">${category}</button>`)
+          .join('');
+
+        menuFilter.querySelectorAll('.filter-btn').forEach((button) => {
+          button.addEventListener('click', () => {
+            activeCategory = button.dataset.category;
+            buildFilters();
+            buildMenu();
+          });
+        });
+      }
+
+      function buildMenu() {
+        const visibleCategories = activeCategory === 'Alle' ? categoryOrder : [activeCategory];
+
+        menuCategories.innerHTML = visibleCategories
+          .map((category) => {
+            const items = dishes.filter((dish) => dish.category === category);
+            return `<section class="menu-category reveal show"><h3>${category}</h3><div class="menu-grid">${items
+              .map(
+                (dish) => `<button class="dish" type="button" data-dish-id="${dish.id}"><img src="${dish.image}" alt="${dish.name}" loading="lazy" decoding="async" referrerpolicy="no-referrer" /><div class="dish-body"><div class="dish-head"><h4>${dish.name}</h4><span class="price">${dish.price}</span></div><p>${dish.description}</p><div class="dish-meta"><span>${dish.category}</span></div></div></button>`
+              )
+              .join('')}</div></section>`;
+          })
+          .join('');
+
+        menuCategories.querySelectorAll('[data-dish-id]').forEach((button) => {
+          button.addEventListener('click', () => openDishModal(button.dataset.dishId));
+        });
+      }
+
+      const dishModal = document.getElementById('dishModal');
+      const modalClose = document.getElementById('modalClose');
+      const modalOverlay = dishModal.querySelector('.modal-overlay');
+      const modalReserve = document.getElementById('modalReserve');
+
+      const dishTitle = document.getElementById('dishTitle');
+      const dishImage = document.getElementById('dishImage');
+      const dishDescription = document.getElementById('dishDescription');
+      const dishPrice = document.getElementById('dishPrice');
+      const dishIngredients = document.getElementById('dishIngredients');
+      const dishAllergens = document.getElementById('dishAllergens');
+      const dishStyle = document.getElementById('dishStyle');
+      const dishRecommendation = document.getElementById('dishRecommendation');
+
+      function openDishModal(dishId) {
+        const dish = dishes.find((item) => item.id === dishId);
+        if (!dish) return;
+
+        dishTitle.textContent = dish.name;
+        dishImage.src = dish.image;
+        dishImage.alt = dish.name;
+        dishDescription.textContent = dish.description;
+        dishPrice.textContent = dish.price;
+        dishIngredients.innerHTML = dish.ingredients.map((ingredient) => `<li>${ingredient}</li>`).join('');
+        dishAllergens.textContent = dish.allergens;
+        dishStyle.textContent = dish.style;
+        dishRecommendation.textContent = dish.recommendation;
+
+        dishModal.classList.add('open');
+        dishModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        modalClose.focus();
+      }
+
+      function closeDishModal() {
+        dishModal.classList.remove('open');
+        dishModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+
+      modalClose.addEventListener('click', closeDishModal);
+      modalOverlay.addEventListener('click', closeDishModal);
+      modalReserve.addEventListener('click', closeDishModal);
+
+      const lightbox = document.getElementById('galleryLightbox');
+      const lightboxImage = document.getElementById('lightboxImage');
+      const lightboxClose = document.getElementById('lightboxClose');
+
+      function openLightbox(src, alt) {
+        lightboxImage.src = src;
+        lightboxImage.alt = alt || 'Galeriebild';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+
+      document.querySelectorAll('.gallery-item').forEach((item) => {
+        item.addEventListener('click', () => {
+          const image = item.querySelector('img');
+          openLightbox(item.dataset.lightboxSrc || image.src, image.alt);
+        });
+      });
+
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      lightboxClose.addEventListener('click', closeLightbox);
+
+      const navToggle = document.querySelector('.nav-toggle');
+      const navLinks = document.querySelector('.nav-links');
+
+      navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(open));
+      });
+
+      navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      const revealItems = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -5% 0px' }
+        );
+        revealItems.forEach((item) => observer.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add('show'));
+      }
+
+      const reservationForm = document.getElementById('reservationForm');
+      const reservationStatus = document.getElementById('reservationStatus');
+
+      reservationForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const requiredFields = reservationForm.querySelectorAll('[required]');
+        const hasInvalid = Array.from(requiredFields).some((field) => !String(field.value).trim());
+        if (hasInvalid) {
+          reservationStatus.textContent = 'Bitte fülle alle Pflichtfelder aus.';
+          return;
+        }
+        reservationStatus.textContent = 'Danke für deine Anfrage. Wir bestätigen deinen Tisch zeitnah.';
+        reservationForm.reset();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          if (dishModal.classList.contains('open')) closeDishModal();
+          if (lightbox.classList.contains('open')) closeLightbox();
+        }
+      });
+
+      buildFilters();
+      buildMenu();
+    </script>
+  </body>
+</html>
