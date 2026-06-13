@@ -17,7 +17,6 @@
   --shadow-md: 0 12px 42px rgba(0,0,0,0.48);
   --shadow-lg: 0 28px 70px rgba(0,0,0,0.55);
   --container: min(1140px,92vw);
-    isolation:isolate;
   --gap:       1.25rem;
 }
 
@@ -30,7 +29,6 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:'Inter',sans-serif;
-    pointer-events:none;
   line-height:1.65;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
@@ -792,9 +790,10 @@ h3{font-size:clamp(1.05rem,1.4vw,1.2rem);}
     flex-direction:column;align-items:flex-start;
     gap:0;
     padding:0;
-    background:transparent;
-    border:0;
-    box-shadow:none;
+    background:rgba(15,15,24,.98);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow-md);
     max-height:0;
     overflow:hidden;
     transform:translateY(-8px);
@@ -810,7 +809,7 @@ h3{font-size:clamp(1.05rem,1.4vw,1.2rem);}
     visibility:visible;
     pointer-events:auto;
     transform:translateY(0);
-    padding:1rem 0 0;
+    padding:1rem;
   }
   .nav a{
     width:100%;padding:.9rem 0;
