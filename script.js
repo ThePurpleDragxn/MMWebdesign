@@ -4,10 +4,12 @@ const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
 
 if (menuToggle && nav) {
-  menuToggle.addEventListener('click', () => {
+  const toggleNav = () => {
     const open = nav.classList.toggle('open');
     menuToggle.setAttribute('aria-expanded', String(open));
-  });
+  };
+
+  menuToggle.addEventListener('click', toggleNav);
 
   nav.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
