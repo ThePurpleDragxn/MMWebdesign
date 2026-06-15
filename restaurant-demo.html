@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
@@ -8,13 +8,8 @@
       name="description"
       content="Premium Restaurant-Website mit interaktivem Menü, emotionaler Food-Inszenierung und klarer Reservierungsführung."
     />
+    <meta name="robots" content="noindex, nofollow" />
     <meta name="theme-color" content="#120f0c" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <style>
       :root {
         --bg: #120f0c;
@@ -39,7 +34,7 @@
       body {
         margin: 0;
         color: var(--text);
-        font-family: "Manrope", sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
         overflow-x: hidden;
         background:
@@ -82,7 +77,7 @@
       }
 
       .brand {
-        font-family: "Playfair Display", serif;
+        font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
         font-size: 1.3rem;
         letter-spacing: 0.03em;
         white-space: nowrap;
@@ -148,7 +143,7 @@
       h3,
       h4 {
         margin: 0;
-        font-family: "Playfair Display", serif;
+        font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
         line-height: 1.1;
       }
 
@@ -679,7 +674,7 @@
     <div class="container">
       <header class="topbar">
         <div class="brand">BELLA FORCHETTA</div>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Navigation öffnen">☰</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Navigation öffnen">Menu</button>
         <nav class="nav-links" id="main-nav" aria-label="Restaurant Navigation">
           <a href="#start">Start</a>
           <a href="#menu">Menü</a>
@@ -713,7 +708,7 @@
 
         <article class="food-hero reveal" aria-label="Hauptgericht in Restaurant-Atmosphäre">
           <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80"
+            src="assets/placeholder-restaurant.svg"
             alt="Stilvoll gedeckter Tisch in einem Restaurant"
             loading="lazy"
             decoding="async"
@@ -760,15 +755,15 @@
           <h2>So fühlt sich ein Abend bei uns an</h2>
         </div>
         <div class="gallery reveal" aria-label="Bildergalerie Restaurant">
-          <button class="gallery-item" type="button" data-lightbox-src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1800&q=80" aria-label="Galeriebild vergrößern">
-            <img class="gallery-main" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80" alt="Restaurant-Innenraum mit warmem Licht" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+          <button class="gallery-item" type="button" data-lightbox-src="assets/placeholder-restaurant.svg" aria-label="Galeriebild vergrößern">
+            <img class="gallery-main" src="assets/placeholder-restaurant.svg" alt="Restaurant-Innenraum mit warmem Licht" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
           </button>
           <div class="gallery-col">
-            <button class="gallery-item" type="button" data-lightbox-src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80" aria-label="Galeriebild vergrößern">
-              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="Detailaufnahme einer gedeckten Restauranttafel" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            <button class="gallery-item" type="button" data-lightbox-src="assets/placeholder-restaurant.svg" aria-label="Galeriebild vergrößern">
+              <img src="assets/placeholder-restaurant.svg" alt="Detailaufnahme einer gedeckten Restauranttafel" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
             </button>
-            <button class="gallery-item" type="button" data-lightbox-src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1600&q=80" aria-label="Galeriebild vergrößern">
-              <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=80" alt="Freunde genießen Abendessen im Restaurant" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            <button class="gallery-item" type="button" data-lightbox-src="assets/placeholder-restaurant.svg" aria-label="Galeriebild vergrößern">
+              <img src="assets/placeholder-restaurant.svg" alt="Freunde genießen Abendessen im Restaurant" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
             </button>
           </div>
         </div>
@@ -818,8 +813,20 @@
                 <option>6+ Personen</option>
               </select>
 
-              <label for="guestContact">Kontakt (E-Mail oder Telefon)</label>
-              <input id="guestContact" name="guestContact" type="text" required />
+              <label for="guestEmail">E-Mail</label>
+              <input id="guestEmail" name="guestEmail" type="email" autocomplete="email" required />
+
+              <label for="guestPhone">Telefon (optional)</label>
+              <input id="guestPhone" name="guestPhone" type="tel" autocomplete="tel" pattern="[0-9+()\-\s]{6,}" />
+
+              <label for="guestMessage">Nachricht (optional)</label>
+              <textarea id="guestMessage" name="guestMessage" rows="3" maxlength="500"></textarea>
+
+              <label>
+                <input id="reservationConsent" name="reservationConsent" type="checkbox" required />
+                Ich habe die <a href="datenschutz.html" target="_blank" rel="noopener noreferrer" style="color: red;  ">Datenschutzerklärung</a>
+                gelesen und stimme der Verarbeitung meiner Angaben zur Bearbeitung meiner Reservierungsanfrage zu.
+              </label>
 
               <button class="btn btn-main" type="submit">Reservierungsanfrage senden</button>
               <p class="reservation-status" id="reservationStatus" aria-live="polite"></p>
@@ -831,7 +838,9 @@
       <footer class="site-footer">
         <p>
           Bella Forchetta Berlin | Rosenthaler Straße 11, 10119 Berlin | 030 12345678 |
-          <a href="restaurant-impressum.html">Beispiel‑Impressum</a>
+          <a href="restaurant-impressum.html">Beispiel-Impressum</a> |
+          <a href="impressum.html">Impressum</a> |
+          <a href="datenschutz.html">Datenschutz</a>
         </p>
       </footer>
     </div>
@@ -841,7 +850,7 @@
       <aside class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="dishTitle">
         <div class="modal-head">
           <h3 id="dishTitle">Gericht</h3>
-          <button class="modal-close" id="modalClose" type="button" aria-label="Schließen">×</button>
+          <button class="modal-close" id="modalClose" type="button" aria-label="Schließen">x</button>
         </div>
         <img class="modal-image" id="dishImage" src="" alt="" />
         <p id="dishDescription"></p>
@@ -860,7 +869,7 @@
 
     <div class="lightbox" id="galleryLightbox" aria-hidden="true">
       <div class="lightbox-inner">
-        <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Bild schließen">×</button>
+        <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Bild schließen">x</button>
         <img id="lightboxImage" src="" alt="Galeriebild" />
       </div>
     </div>
@@ -872,7 +881,7 @@
           name: 'Carpaccio di Manzo',
           category: 'Vorspeisen',
           price: '14 EUR',
-          image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Hauchdünn geschnittenes Rinderfilet mit Zitronenöl, Kapern und gereiftem Parmesan.',
           ingredients: ['Rinderfilet', 'Parmesan', 'Kapern', 'Rucola', 'Zitronenöl'],
           allergens: 'Milch',
@@ -884,7 +893,7 @@
           name: 'Burrata al Pomodoro',
           category: 'Vorspeisen',
           price: '13 EUR',
-          image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Cremige Burrata auf geschmorten Tomaten mit Basilikum und geröstetem Sauerteig.',
           ingredients: ['Burrata', 'Tomaten', 'Basilikum', 'Olivenöl', 'Sauerteigbrot'],
           allergens: 'Milch, Gluten',
@@ -896,7 +905,7 @@
           name: 'Gegrillter Oktopus',
           category: 'Vorspeisen',
           price: '16 EUR',
-          image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Zarter Oktopus vom Grill mit Zitronenöl, Kräutersalat und confierten Kirschtomaten.',
           ingredients: ['Oktopus', 'Zitronenöl', 'Petersilie', 'Kirschtomaten', 'Meersalz'],
           allergens: 'Weichtiere',
@@ -908,7 +917,7 @@
           name: 'Ofen-Lachs',
           category: 'Hauptgerichte',
           price: '28 EUR',
-          image: 'https://images.pexels.com/photos/3763847/pexels-photo-3763847.jpeg?auto=compress&cs=tinysrgb&w=1200',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Sanft gegarter Lachs mit Kräuterkruste, Zitronenbutter und saisonalem Ofengemüse.',
           ingredients: ['Lachs', 'Kräuter', 'Zitrone', 'Butter', 'Saisongemüse'],
           allergens: 'Fisch, Milch',
@@ -920,7 +929,7 @@
           name: 'Tagliatelle al Tartufo',
           category: 'Hauptgerichte',
           price: '24 EUR',
-          image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Frische Tagliatelle in Trüffelrahm mit Parmesanspänen und schwarzem Pfeffer.',
           ingredients: ['Tagliatelle', 'Trüffel', 'Parmesan', 'Sahne', 'Pfeffer'],
           allergens: 'Gluten, Milch, Ei',
@@ -932,7 +941,7 @@
           name: 'Rinderfilet 180g',
           category: 'Hauptgerichte',
           price: '36 EUR',
-          image: 'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Rosa gebratenes Filet mit Rotweinjus, Kartoffelgratin und glasiertem Gemüse.',
           ingredients: ['Rinderfilet', 'Rotweinjus', 'Kartoffel', 'Möhren', 'Thymian'],
           allergens: 'Sellerie, Sulfite, Milch',
@@ -944,7 +953,7 @@
           name: 'Tiramisu Hausart',
           category: 'Desserts',
           price: '10 EUR',
-          image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Luftige Mascarponecreme, Espresso-Biskuit und feiner Kakao im Glas serviert.',
           ingredients: ['Mascarpone', 'Espresso', 'Löffelbiskuit', 'Kakao', 'Ei'],
           allergens: 'Gluten, Milch, Ei',
@@ -956,7 +965,7 @@
           name: 'Panna Cotta Vaniglia',
           category: 'Desserts',
           price: '9 EUR',
-          image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Cremige Vanille-Panna-Cotta mit warmem Beerenragout und Minze.',
           ingredients: ['Sahne', 'Vanille', 'Beeren', 'Zucker', 'Minze'],
           allergens: 'Milch',
@@ -968,7 +977,7 @@
           name: 'Cannoli Siciliani',
           category: 'Desserts',
           price: '11 EUR',
-          image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Knusprige Cannoli mit Ricottacreme, kandierter Orange und Pistazien.',
           ingredients: ['Ricotta', 'Pistazien', 'Orangenzesten', 'Cannoli-Teig', 'Puderzucker'],
           allergens: 'Gluten, Milch, Schalenfrüchte',
@@ -980,7 +989,7 @@
           name: 'Virgin Bellini',
           category: 'Getränke',
           price: '8 EUR',
-          image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Fruchtiger Aperitif aus weißem Pfirsich, Traubensaft und einem Spritzer Zitrone.',
           ingredients: ['Pfirsichpüree', 'Traubensaft', 'Zitronensaft', 'Eiswürfel'],
           allergens: 'Keine deklarationspflichtigen Allergene',
@@ -992,7 +1001,7 @@
           name: 'Hausgemachte Zitronenlimonade',
           category: 'Getränke',
           price: '7 EUR',
-          image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Frisch gepresste Zitrone, Minze und feine Kohlensäure.',
           ingredients: ['Zitronensaft', 'Minze', 'Zucker', 'Mineralwasser'],
           allergens: 'Keine deklarationspflichtigen Allergene',
@@ -1004,7 +1013,7 @@
           name: 'Aranciata Rossa',
           category: 'Getränke',
           price: '6 EUR',
-          image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Blutorangen-Limonade mit leichter Bitternote und frischer Minze.',
           ingredients: ['Blutorangensaft', 'Mineralwasser', 'Minze', 'Eiswürfel'],
           allergens: 'Keine deklarationspflichtigen Allergene',
@@ -1016,8 +1025,8 @@
           name: 'Chef Special: Hummer-Risotto',
           category: 'Specials des Hauses',
           price: '39 EUR',
-          image: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80',
-          description: 'Cremiges Safran-Risotto mit Hummer, Kräuteröl und Zitronenabrieb.',
+          image: 'assets/placeholder-restaurant.svg',
+          description: 'Cremiges Safran-Risotto mit Hummer, Kräuteroel und Zitronenabrieb.',
           ingredients: ['Arborio-Reis', 'Hummer', 'Safran', 'Parmesan', 'Weißwein'],
           allergens: 'Krustentiere, Milch, Sulfite',
           style: 'A la minute zubereitet',
@@ -1028,7 +1037,7 @@
           name: 'Chef Special: Kalbsbäckchen',
           category: 'Specials des Hauses',
           price: '34 EUR',
-          image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1200&q=80',
+          image: 'assets/placeholder-restaurant.svg',
           description: 'Langsam geschmorte Kalbsbäckchen auf Selleriepüree mit geschmorter Schalotte.',
           ingredients: ['Kalbsbäckchen', 'Sellerie', 'Schalotten', 'Rotwein', 'Thymian'],
           allergens: 'Sellerie, Sulfite, Milch',
@@ -1040,9 +1049,9 @@
           name: 'Chef Special: Steinbutt & Safran',
           category: 'Specials des Hauses',
           price: '37 EUR',
-          image: 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1200&q=80',
-          description: 'Filet vom Steinbutt auf Safran-Fenchel mit Zitronenbutter und Kräuteröl.',
-          ingredients: ['Steinbutt', 'Safran', 'Fenchel', 'Zitrone', 'Kräuteröl'],
+          image: 'assets/placeholder-restaurant.svg',
+          description: 'Filet vom Steinbutt auf Safran-Fenchel mit Zitronenbutter und Kräuteroel.',
+          ingredients: ['Steinbutt', 'Safran', 'Fenchel', 'Zitrone', 'Kräuteroel'],
           allergens: 'Fisch, Milch',
           style: 'Schonend gegart, fein angerichtet',
           recommendation: 'Empfohlen mit einem mineralischen Weißburgunder.'
@@ -1198,6 +1207,8 @@
 
       const reservationForm = document.getElementById('reservationForm');
       const reservationStatus = document.getElementById('reservationStatus');
+      const reservationConsent = document.getElementById('reservationConsent');
+      const guestEmail = document.getElementById('guestEmail');
 
       reservationForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -1205,6 +1216,14 @@
         const hasInvalid = Array.from(requiredFields).some((field) => !String(field.value).trim());
         if (hasInvalid) {
           reservationStatus.textContent = 'Bitte fülle alle Pflichtfelder aus.';
+          return;
+        }
+        if (reservationConsent && !reservationConsent.checked) {
+          reservationStatus.textContent = 'Bitte stimme der Datenschutzerklärung zu.';
+          return;
+        }
+        if (guestEmail && !guestEmail.checkValidity()) {
+          reservationStatus.textContent = 'Bitte gib eine gültige E-Mail-Adresse ein.';
           return;
         }
         reservationStatus.textContent = 'Danke für deine Anfrage. Wir bestätigen deinen Tisch zeitnah.';
@@ -1223,3 +1242,6 @@
     </script>
   </body>
 </html>
+
+
+

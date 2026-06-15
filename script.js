@@ -105,30 +105,3 @@ accordionTriggers.forEach((trigger) => {
   });
 });
 
-/* ─── CONTACT FORM ─────────────────────────────────────── */
-const contactForm = document.getElementById('contactForm');
-const formStatus = document.getElementById('formStatus');
-
-if (contactForm && formStatus) {
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const required = contactForm.querySelectorAll('[required]');
-    const invalid = Array.from(required).some((f) => !f.value.trim());
-    if (invalid) {
-      formStatus.textContent = 'Bitte fülle alle Pflichtfelder aus.';
-      formStatus.style.color = '#ff7675';
-      return;
-    }
-
-    const btn = contactForm.querySelector('button[type="submit"]');
-    if (btn) { btn.disabled = true; btn.textContent = 'Wird gesendet…'; }
-
-    setTimeout(() => {
-      formStatus.textContent = 'Vielen Dank! Ich melde mich zeitnah bei dir.';
-      formStatus.style.color = '#80f2ef';
-      contactForm.reset();
-      if (btn) { btn.disabled = false; btn.textContent = 'Anfrage absenden'; }
-    }, 800);
-  });
-}
